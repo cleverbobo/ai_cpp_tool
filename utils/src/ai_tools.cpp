@@ -28,12 +28,12 @@ BoxVec load_box_data(const std::string filename) {
             box.score = score;
             boxes.push_back(box); // 将 box 添加到向量中
         } else {
-            std::cerr << "读取数据失败，可能是首行label: " << line << std::endl;
+            // std::cerr << "读取数据失败，可能是首行label: " << line << std::endl;
         }
     }
 
     file.close(); // 关闭文件
-    std::cout << "load test data success. input data num: " << boxes.size() << "\n";
+    // std::cout << "load test data success. input data num: " << boxes.size() << "\n";
     return boxes; // 返回 Box 向量
 }
 
