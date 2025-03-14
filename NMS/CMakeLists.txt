@@ -14,28 +14,20 @@ set(OPTIMIZATION_FLAGS "")
 
 # 检测目标体系结构
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64|armv8)$")
-    # 针对ARM架构（如ARM-A53）
-    set(OPTIMIZATION_FLAGS "-Ofast -funroll-all-loops -fivopts -flto \
-                           -march=armv8-a -mtune=cortex-a53 -mcpu=cortex-a53 \
-                           -fomit-frame-pointer -fstrict-aliasing -ffast-math \
-                           -DNDEBUG -fno-exceptions -fno-rtti \
-                           -fno-strict-overflow -floop-parallelize-all \
-                           -ftree-parallelize-loops=4 -ftree-vectorize")
+    # 针对ARM-A53
+    set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -funroll-all-loops -fivopts -flto \
+                                 -march=armv8-a -mtune=cortex-a53 -mcpu=cortex-a53 \
+                                 -fomit-frame-pointer -fstrict-aliasing -ffast-math \
+                                 -DNDEBUG -fno-exceptions -fno-rtti \
+                                 -fno-strict-overflow -floop-parallelize-all \
+                                 -ftree-parallelize-loops=4 -ftree-vectorize -fexceptions")
     message(STATUS "Detected ARM architecture. Applying ARM-specific optimization flags.")
-else()
-    # 默认优化标志（可根据需要调整）
-    set(OPTIMIZATION_FLAGS "-O3 -flto -march=native -mtune=native \
-                           -fomit-frame-pointer -fstrict-aliasing -ffast-math \
-                           -DNDEBUG -fno-exceptions -fno-rtti")
-    message(STATUS "Unknown architecture. Applying default optimization flags.")
 endif()
 
 # 将优化标志应用到Release构建类型
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${OPTIMIZATION_FLAGS}")
 message(STATUS "[NMS]: CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
 
-
-# set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -funroll-all-loops -fivopts -flto -march=armv8-a -mtune=cortex-a53 -mcpu=cortex-a53 -fomit-frame-pointer -fstrict-aliasing -ffast-math -DNDEBUG -fno-exceptions -fno-rtti -fno-strict-overflow -floop-parallelize-all -ftree-parallelize-loops=4 -ftree-vectorize -fexceptions")
 include_directories(${CMAKE_SOURCE_DIR}/utils/include)
 
 # 创建静态库
