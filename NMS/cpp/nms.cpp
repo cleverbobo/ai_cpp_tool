@@ -3,7 +3,7 @@
 #include "nms.h"
 
 // C++ NMS
-void NMS(const BoxVec &dets, BoxVec &res, float nmsConfidence, float iou_thresh) {
+void NMS(const BoxVec &dets, BoxVec &res, float nmsConfidence) {
     if (dets.empty()) {
         return;
     }
@@ -62,7 +62,7 @@ void NMS(const BoxVec &dets, BoxVec &res, float nmsConfidence, float iou_thresh)
             float union_area = lbox[4] + rbox[4] - inter_area;
             float iou = inter_area / union_area;
 
-            if (iou > iou_thresh) {
+            if (iou > nmsConfidence) {
                 pValidIndexes[n] = 0; // 抑制掉重叠程度较高的框
             }
         }
