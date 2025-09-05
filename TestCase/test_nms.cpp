@@ -11,11 +11,12 @@ int test_nms(TimeStamp& timeStamp,const int LoopNum, const std::string FilePath)
     std::cout << "[NMS]: InputBoxVec.size(): " << InputBoxVec.size() << std::endl;
 
     // loop test
+    postBoxMap postFilter(384,2048,{4,4});
     for(int i = 0 ; i < LoopNum; i++ ){
 
         
         timeStamp.RecordTime("C++ NMS time");
-        NMS(InputBoxVec, OutputBoxVec);
+        NMS(InputBoxVec, OutputBoxVec, 0.4, postFilter);
         timeStamp.RecordTime("C++ NMS time");
         if (i < LoopNum-1) OutputBoxVec.clear();
         
